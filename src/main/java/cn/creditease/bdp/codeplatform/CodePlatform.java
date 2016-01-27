@@ -3,6 +3,11 @@ package cn.creditease.bdp.codeplatform;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.math.BigInteger;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Properties;
 
 import javax.ws.rs.Consumes;
@@ -19,6 +24,8 @@ import com.sun.jersey.multipart.FormDataParam;
 
 @Path("/")
 public class CodePlatform {
+	
+	static Map<String,Object> cache = new HashMap<String,Object>();
 	
 	static{
 		try {
@@ -55,12 +62,19 @@ public class CodePlatform {
         }catch(Exception e){
         }
         try {
+        	
         	byte[] body = toByte(file);
+        	String value = getCache(body);
+        	if (value != null){
+        		System.out.println("get cache :"+value);
+        		return value;
+        	}
         	file.read(body, 0, file.available());
         	String[] result = UUAPI.easyDecaptcha(body, codeType);
         	JSONObject json = new JSONObject();
         	json.put("codeId", result[0]);
         	json.put("result", result[1]);
+        	cache.put(getMD5(body), json.toString());
         	return json.toString();
         } catch (Exception e) {
             e.printStackTrace();
@@ -89,4 +103,22 @@ public class CodePlatform {
 		}
 		return buff;
 	}
+	
+	private String getCache(byte[] body){
+		try {
+			String md5 = getMD5(body);
+			return (String) cache.get(md5);
+		} catch (NoSuchAlgorithmException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	private String getMD5(byte[] body)throws NoSuchAlgorithmException{
+		MessageDigest digest = MessageDigest.getInstance("MD5");
+		digest.update(body);
+		BigInteger bigInt = new BigInteger(1, digest.digest());
+		return bigInt.toString(16);
+	}
+	
 }
