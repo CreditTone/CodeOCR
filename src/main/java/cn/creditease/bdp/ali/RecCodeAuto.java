@@ -20,10 +20,11 @@ public class RecCodeAuto{
     }
 	
     public static void init(String libName){
-		DLLPATH = IOTool.getRootPath("dll/sunday");
+		DLLPATH = IOTool.getRootPath("dll/sunday_x64.dll");
 		System.out.println("DLLPATH:"+DLLPATH);
 		LIBPATH = IOTool.getRootPath("dll/"+libName);
 		libIndex = CodeRec.INSTANCE.LoadLibFromFile(LIBPATH,"123");
+		System.out.println("init finish");
     }
     
     public static void init(String libName,String dllPath){
