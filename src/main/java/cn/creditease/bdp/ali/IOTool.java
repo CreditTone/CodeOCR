@@ -28,7 +28,7 @@ public class IOTool {
 		public static String getRootPath(String subPath){
 			String allPath=null;
 			try {
-				allPath = IOTool.class.getClass().getResource("/").toURI().getPath()+subPath;
+				allPath = IOTool.class.getResource("/").toURI().getPath()+subPath;
 			} catch (URISyntaxException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
