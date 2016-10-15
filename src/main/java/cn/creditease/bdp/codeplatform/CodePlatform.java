@@ -21,7 +21,8 @@ import org.codehaus.jettison.json.JSONObject;
 import com.sun.jersey.core.header.FormDataContentDisposition;
 import com.sun.jersey.multipart.FormDataParam;
 
-import cn.creditease.bdp.ali.RecCodeAuto;
+import cn.creditease.bdp.ali.JD_RecCodeAuto;
+import cn.creditease.bdp.ali.Taobao_RecCodeAuto;
 
 
 @Path("/")
@@ -42,7 +43,10 @@ public class CodePlatform {
         try {
         	byte[] body = toByte(file);
         	 if (codeType == 8000){
-        		 String result = RecCodeAuto.getCode(body);
+        		 String result = Taobao_RecCodeAuto.getCode(body);
+        		 return "{\"codeId\":\"0\",\"result\":\""+result+"\"}";
+             }else if (codeType == 8001){
+        		 String result = JD_RecCodeAuto.getCode(body);
         		 return "{\"codeId\":\"0\",\"result\":\""+result+"\"}";
              }
         } catch (Exception e) {

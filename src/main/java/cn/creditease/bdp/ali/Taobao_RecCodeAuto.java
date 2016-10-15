@@ -7,7 +7,9 @@ import java.io.UnsupportedEncodingException;
 import com.sun.jna.Native;
 import com.sun.jna.win32.StdCallLibrary;
 
-public class RecCodeAuto{  
+import cn.creditease.bdp.ali.JD_RecCodeAuto.CodeRec;
+
+public class Taobao_RecCodeAuto{  
 	private static  String DLLPATH=null;
 	private static  String LIBPATH=null;
 	private static int libIndex=0;
@@ -16,22 +18,15 @@ public class RecCodeAuto{
     public static byte[] OUTINIT=null;
     
     static{
-    	RecCodeAuto.init("OCR.lib");
+    	Taobao_RecCodeAuto.init();
     }
 	
-    public static void init(String libName){
-		DLLPATH = IOTool.getRootPath("dll/sunday_x64.dll");
+    public static void init(){
+		DLLPATH = IOTool.getRootPath("dll/taobao/sunday_x64.dll");
 		System.out.println("DLLPATH:"+DLLPATH);
-		LIBPATH = IOTool.getRootPath("dll/"+libName);
+		LIBPATH = IOTool.getRootPath("dll/taobao/OCR.lib");
 		libIndex = CodeRec.INSTANCE.LoadLibFromFile(LIBPATH,"123");
 		System.out.println("init finish");
-    }
-    
-    public static void init(String libName,String dllPath){
-    	DLLPATH = IOTool.getRootPath("dll/"+dllPath);
-    	System.out.println("DLLPATH:"+DLLPATH);
-    	LIBPATH = IOTool.getRootPath("dll/"+libName);
-    	libIndex = CodeRec.INSTANCE.LoadLibFromFile(LIBPATH,"123");
     }
     
 	public interface CodeRec extends StdCallLibrary{
