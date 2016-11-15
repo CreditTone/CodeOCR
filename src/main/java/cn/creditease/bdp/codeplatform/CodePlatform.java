@@ -68,11 +68,11 @@ public class CodePlatform {
 		}catch(Exception e){
 			e.printStackTrace();
 		}finally{
-//			try {
-//				in.close();
-//			} catch (IOException e) {
-//				e.printStackTrace();
-//			}
+			try {
+				in.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 		}
 		return buff;
 	}
