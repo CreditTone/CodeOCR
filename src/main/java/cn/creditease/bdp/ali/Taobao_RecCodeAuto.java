@@ -24,7 +24,7 @@ public class Taobao_RecCodeAuto{
     public static void init(){
 		DLLPATH = IOTool.getRootPath("dll/taobao/sunday_x64.dll");
 		System.out.println("DLLPATH:"+DLLPATH);
-		LIBPATH = IOTool.getRootPath("dll/taobao/OCR.lib");
+		LIBPATH = IOTool.getRootPath("dll/taobao/aliyun_2016.lib");
 		libIndex = CodeRec.INSTANCE.LoadLibFromFile(LIBPATH,"123");
 		System.out.println("init finish");
     }
